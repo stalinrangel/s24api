@@ -447,11 +447,11 @@ class RepartidorController extends Controller
             ->with('productos.establecimiento')
             ->with('ruta')
             ->where('repartidor_id', $repartidor_id)
-            ->where(DB::raw('DAY(created_at)'),1)
+            //->where(DB::raw('DAY(created_at)'),1)
+            ->where('estado',4)
             ->where(DB::raw('MONTH(created_at)'),$request->input('mes'))
             ->where(DB::raw('YEAR(created_at)'),$request->input('anio'))
             ->get();
-
         if(count($pedidos) == 0){
             return response()->json(['error'=>'No tienes pedidos registrados en la fecha '.$request->input('dia').'/'.$request->input('mes').'/'.$request->input('anio')], 404);          
         }else{
