@@ -105,12 +105,13 @@ class ProductoController extends Controller
         if($nuevoProducto=\App\Producto::create([
             'nombre' => $request->input('nombre'),
             'estado' => $request->input('estado'),
-            //'imagen' => $request->input('imagen'),
+            'imagen' => $request->input('imagen'),
             'precio' => $request->input('precio'),
             'descripcion' => $request->input('descripcion'),
             'subcategoria_id' => $request->input('subcategoria_id'),
             'establecimiento_id' => $request->input('establecimiento_id'),
-            'codigo' => $codigo
+            'codigo' => $codigo,
+            //'imagen' => $imagen
         ])){
            return response()->json(['message'=>'Producto creado con éxito.',
              'producto'=>$nuevoProducto], 200);
@@ -173,6 +174,7 @@ class ProductoController extends Controller
         $descripcion=$request->input('descripcion');
         $subcategoria_id=$request->input('subcategoria_id');
         $estado=$request->input('estado');
+        $imagen=$request->input('imagen');
 
         // Creamos una bandera para controlar si se ha modificado algún dato.
         $bandera = false;
@@ -240,6 +242,11 @@ class ProductoController extends Controller
         if ($estado != null && $estado!='')
         {
             $producto->estado = $estado;
+            $bandera=true;
+        }
+        if ($imagen != null && $imagen!='')
+        {
+            $producto->imagen = $imagen;
             $bandera=true;
         }
 

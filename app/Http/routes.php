@@ -53,6 +53,8 @@ Route::group(  ['middleware' =>'cors'], function(){
     //----Pruebas UsuarioController
     Route::post('/usuarios','UsuarioController@store');
     Route::get('/usuarios/validar/{email}','UsuarioController@validarCuenta');
+    Route::post('/repartidores','RepartidorController@store');
+    Route::post('/establecimientos','EstablecimientoController@store');
 
     //----Pruebas EntidadMunicipioController
     Route::get('/entidades/municipios','EntidadMunicipioController@index');
@@ -74,6 +76,9 @@ Route::group(  ['middleware' =>'cors'], function(){
     Route::get('/categorias','CategoriaController@index');
     Route::get('/categorias/habilitadas','CategoriaController@categoriasHabilitadas');
     Route::get('/categorias/{id}','CategoriaController@show');
+    //----Pruebas CategoriaController
+        //Route::get('/categorias','CategoriaController@index');
+        Route::get('/categorias/subcats/productos/establecimiento','CategoriaController@catsSubcatsProdsEst');
 
     //----Pruebas BlogController
     Route::get('/blogs','BlogController@index');
@@ -81,7 +86,19 @@ Route::group(  ['middleware' =>'cors'], function(){
 
     Route::get('/usuarios/email/validar/{email}','UsuarioController@emailDeValidacion');
 
-    Route::group(['middleware' => 'jwt-auth'], function(){
+    //----Pruebas SubCategoriaController
+        Route::get('/subcategorias','SubCategoriaController@index');
+        Route::get('/subcategorias/productos/establecimiento','SubCategoriaController@subcatsProdsEst');
+        Route::get('/subcategorias/habilitadas','SubCategoriaController@subcategoriasHabilitadas');
+        Route::get('/subcategorias/categoria','SubCategoriaController@subcategoriasCategoria');
+        Route::post('/subcategorias','SubCategoriaController@store');
+        Route::put('/subcategorias/{id}','SubCategoriaController@update');
+        Route::delete('/subcategorias/{id}','SubCategoriaController@destroy');
+        Route::get('/subcategorias/{id}','SubCategoriaController@show');
+        Route::get('/subcategorias/{id}/productos','SubCategoriaController@subcategoriaProductos');
+        Route::get('/subcategorias/habilitadas/{categoria_id}','SubCategoriaController@subcatHabCat');
+
+    //Route::group(['middleware' => 'jwt-auth'], function(){
 
         //----Pruebas DashboardController
         Route::get('/dashboard/contadores','DashboardController@contadores');
@@ -111,9 +128,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/usuarios/{id}/pedidos/encurso','UsuarioController@misPedidosEncurso');
         Route::get('/usuarios/{id}/pedidos/finalizados','UsuarioController@misPedidosFinalizados');
 
-        //----Pruebas CategoriaController
-        //Route::get('/categorias','CategoriaController@index');
-        Route::get('/categorias/subcats/productos/establecimiento','CategoriaController@catsSubcatsProdsEst');
+        
         //Route::get('/categorias/habilitadas','CategoriaController@categoriasHabilitadas');
         Route::post('/categorias','CategoriaController@store');
         Route::put('/categorias/{id}','CategoriaController@update');
@@ -125,7 +140,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/establecimientos','EstablecimientoController@index');
         Route::get('/establecimientos/productos/subcategoria','EstablecimientoController@establecimientosProdsSubcat');
         Route::get('/establecimientos/habilitados','EstablecimientoController@stblcmtsHabilitados');
-        Route::post('/establecimientos','EstablecimientoController@store');
+       // Route::post('/establecimientos','EstablecimientoController@store');
         Route::put('/establecimientos/{id}','EstablecimientoController@update');
         Route::delete('/establecimientos/{id}','EstablecimientoController@destroy');
         Route::get('/establecimientos/{id}','EstablecimientoController@show');
@@ -141,17 +156,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         Route::get('/productos/{id}','ProductoController@show');
         Route::get('/productos/habilitados/{subcategoria_id}/{establecimiento_id}','ProductoController@prodHabSubcatEst');
 
-        //----Pruebas SubCategoriaController
-        Route::get('/subcategorias','SubCategoriaController@index');
-        Route::get('/subcategorias/productos/establecimiento','SubCategoriaController@subcatsProdsEst');
-        Route::get('/subcategorias/habilitadas','SubCategoriaController@subcategoriasHabilitadas');
-        Route::get('/subcategorias/categoria','SubCategoriaController@subcategoriasCategoria');
-        Route::post('/subcategorias','SubCategoriaController@store');
-        Route::put('/subcategorias/{id}','SubCategoriaController@update');
-        Route::delete('/subcategorias/{id}','SubCategoriaController@destroy');
-        Route::get('/subcategorias/{id}','SubCategoriaController@show');
-        Route::get('/subcategorias/{id}/productos','SubCategoriaController@subcategoriaProductos');
-        Route::get('/subcategorias/habilitadas/{categoria_id}','SubCategoriaController@subcatHabCat');
+        
 
         //----Pruebas PedidoController
         Route::get('/pedidos','PedidoController@index');
@@ -181,12 +186,13 @@ Route::group(  ['middleware' =>'cors'], function(){
         //----Pruebas RepartidorController
         Route::get('/repartidores','RepartidorController@index');
         Route::get('/repartidores/disponibles','RepartidorController@repDisponibles');
-        Route::post('/repartidores','RepartidorController@store');
+        
         Route::put('/repartidores/{id}','RepartidorController@update');
         Route::delete('/repartidores/{id}','RepartidorController@destroy');
         Route::get('/repartidores/{id}','RepartidorController@show');
         Route::post('/repartidores/{id}/set/posicion','RepartidorController@setPosicion');
         Route::get('/repartidores/{id}/pedido/encurso','RepartidorController@miPedidoEnCurso');
+        Route::get('/repartidores/{id}/pedido/enespera','RepartidorController@miPedidoEnEspera');
         Route::get('/repartidores/{id}/historial/pedidos','RepartidorController@historialPedidos');
         Route::get('/repartidores/estadisticas/{repartidor_id}','RepartidorController@conteoPedidos');
 
@@ -237,7 +243,7 @@ Route::group(  ['middleware' =>'cors'], function(){
         //Route::delete('/slider/{id}','SliderController@destroy');
 
         
-    });
+    //});
 
     //----Pruebas SliderController
     Route::get('/slider','SliderController@index');
