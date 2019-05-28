@@ -253,8 +253,8 @@ class LoginController extends Controller
             }
 
             //Login solo para los repartidores
-            if ($user->tipo_usuario != 3 || $user->tipo_usuario !=4) {
-               // return response()->json(['error' => 'No eres un proveedor.'], 401);
+            if ($user->tipo_usuario != 3) {
+                return response()->json(['error' => 'Credenciales inválidas.'], 401);
             }
 
             if (!$token = JWTAuth::attempt($credentials)) {
@@ -290,12 +290,11 @@ class LoginController extends Controller
         //return response()->json(compact('token', 'user'));
 
         $user->repartidor = $user->repartidor;
-        $users = \App\User::where('id',$user->id)->with('establecimiento')->get();
-         $user->establecimiento=$users[0]->establecimiento;
+
         return response()
             ->json([
                 'token' => $token,
-                'user' => $user,
+                'user' => $user
             ]);
     }
 

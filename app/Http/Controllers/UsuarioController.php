@@ -78,7 +78,7 @@ class UsuarioController extends Controller
             /*!$request->input('ciudad') || !$request->input('estado') ||*/ !$request->input('telefono') )
         {
             // Se devuelve un array error con los errors encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para messagees de validación.
-            //return response()->json(['error'=>'Faltan datos necesarios para el proceso de alta.'],422);
+            return response()->json(['error'=>'Faltan datos necesarios para el proceso de alta.'],422);
         } 
         
         $aux = \App\User::where('email', $request->input('email'))->get();
@@ -136,7 +136,7 @@ class UsuarioController extends Controller
         }
 
         if ($request->input('tipo_registro') == 1) {
-            $validado = 1;
+            $validado = 0;
         }else{
             $validado = 1;
         }
