@@ -28,8 +28,8 @@ $target_path = "usuarios/";
 $target_path = $target_path . basename( $_FILES['file']['name']);
  
 if (move_uploaded_file($_FILES['file']['tmp_name'], $target_path)) {
-    echo 'http://service24.app/alinstanteAPI/public/images_uploads/'.$target_path;
+    echo 'http://service24.app/s24api/public/images_uploads/'.$target_path;
 } else {
-    echo 'http://service24.app/alinstanteAPI/public/images_uploads/'.$target_path;
+    echo 'http://service24.app/s24api/public/images_uploads/'.$target_path;
 }
 ?>
