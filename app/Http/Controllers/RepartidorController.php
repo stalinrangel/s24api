@@ -399,6 +399,25 @@ class RepartidorController extends Controller
         } 
     }
 
+    public function miPedidoEnEspera($repartidor_id)
+    {
+        //cargar todos los pedidos en curso (Estado 2, 3)
+        $pedido = \App\Pedido::with('usuario')
+            ->with('productos.establecimiento')
+            ->with('ruta')
+            ->where('repartidor_id', $repartidor_id)
+            ->where(function ($query) {
+                $query->where('estado', 2);
+            })
+            ->get();
+
+        if(count($pedido) == 0){
+            return response()->json(['error'=>'No tienes pedido en curso.'], 404);          
+        }else{
+            return response()->json(['pedido'=>$pedido], 200);
+        } 
+    }
+
     /*Retorna el pedido en curso de un repartidor_id*/
     public function miPedidoEnCurso($repartidor_id)
     {
@@ -408,8 +427,7 @@ class RepartidorController extends Controller
             ->with('ruta')
             ->where('repartidor_id', $repartidor_id)
             ->where(function ($query) {
-                $query->where('estado', 2)
-                      ->orWhere('estado', 3);
+                $query->where('estado', 3);
             })
             ->get();
 
@@ -429,7 +447,7 @@ class RepartidorController extends Controller
             ->with('productos.establecimiento')
             ->with('ruta')
             ->where('repartidor_id', $repartidor_id)
-            ->where(DB::raw('DAY(created_at)'),$request->input('dia'))
+            ->where(DB::raw('DAY(created_at)'),1)
             ->where(DB::raw('MONTH(created_at)'),$request->input('mes'))
             ->where(DB::raw('YEAR(created_at)'),$request->input('anio'))
             ->get();

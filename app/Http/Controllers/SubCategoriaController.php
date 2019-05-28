@@ -299,7 +299,7 @@ class SubCategoriaController extends Controller
     public function subcategoriaProductos($id)
     {
         //cargar una subcat con sus subcat
-        $subcategoria = \App\Subcategoria::with('productos.establecimiento')->find($id);
+        $subcategoria = \App\Subcategoria::with('productos.establecimiento.usuario.repartidor')->find($id);
 
         if(count($subcategoria)==0){
             return response()->json(['error'=>'No existe la subcategoría con id '.$id], 404);          

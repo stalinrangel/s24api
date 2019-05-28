@@ -120,7 +120,7 @@ class PedidoController extends Controller
         }
 
         if($nuevoPedido=\App\Pedido::create([
-            'estado'=>1,
+            'estado'=>2,
             'lat'=>$request->input('lat'),
             'lng'=>$request->input('lng'),
             'direccion'=>$dir, 
@@ -132,10 +132,14 @@ class PedidoController extends Controller
             'costo'=>$request->input('costo'),
             'usuario_id'=>$request->input('usuario_id'),
             /*'establecimiento_id'=>$request->input('establecimiento_id')*/
-            'estado_pago'=>'pendiente',
+            'repartidor_id'=>$request->input('repartidor_id'),
+            'repartidor_nom'=>$request->input('repartidor_nom'),
+            'estado_pago'=>'aprobado',
             'destinatario'=>$request->input('destinatario'),
             'telefono'=>$request->input('telefono'),
             'referencia'=>$request->input('referencia'),
+            'hora'=>$request->input('hora'),
+            //'horario'=>$request->input('horario'),
             ])){
 
             //Crear las relaciones en la tabla pivote
@@ -235,6 +239,8 @@ class PedidoController extends Controller
         $estado_pago=$request->input('estado_pago');
         $api_tipo_pago=$request->input('api_tipo_pago');
         $referencia=$request->input('referencia');
+        $hora=$request->input('hora');
+        //$horario=$request->input('horario'),
 
         // Creamos una bandera para controlar si se ha modificado algún dato.
         $bandera = false;

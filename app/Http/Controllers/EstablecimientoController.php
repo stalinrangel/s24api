@@ -60,7 +60,7 @@ class EstablecimientoController extends Controller
             !$request->input('ciudad') || !$request->input('estado_geo'))
         {
             // Se devuelve un array errors con los errores encontrados y cabecera HTTP 422 Unprocessable Entity – [Entidad improcesable] Utilizada para errores de validación.
-            return response()->json(['error'=>'Faltan datos necesarios para el proceso de alta.'],422);
+           // return response()->json(['error'=>'Faltan datos necesarios para el proceso de alta.'],422);
         } 
         
         $aux = \App\Establecimiento::where('nombre', $request->input('nombre'))->get();
@@ -82,16 +82,25 @@ class EstablecimientoController extends Controller
         $usuario->ciudad = $request->input('ciudad');
         $usuario->estado = $request->input('estado_geo');
         $usuario->telefono = $request->input('telefono');
-        $usuario->imagen = 'https://api.alinstante.app/terminos/imgs/user-white.png';
+        $usuario->imagen = $request->input('imagen');
         $usuario->tipo_usuario = 4;
         $usuario->tipo_registro = 1;
-        //$usuario->id_facebook = $request->input('id_facebook');
-        //$usuario->id_twitter = $request->input('id_twitter');
-        //$usuario->id_instagram = $request->input('id_instagram');
+        $usuario->id_facebook = $request->input('id_facebook');
+        $usuario->id_twitter = $request->input('id_twitter');
+       // $usuario->id_instagram = $request->input('id_instagram');
         $usuario->validado = 1;
         $usuario->status = 'ON';
 
         if($usuario->save()){
+
+             /*Segundo creo una instancia en la tabla repartidores*/
+            $repartidor = new \App\Repartidor;
+            $repartidor->estado = 'ON';
+            $repartidor->activo = 2;
+            $repartidor->ocupado = 2;
+            $repartidor->usuario_id = $usuario->id; 
+            $repartidor->save();
+
             /*Segundo creo una instancia en la tabla repartidores*/
             $nuevoEstablecimiento = new \App\Establecimiento;
             $nuevoEstablecimiento->nombre = $request->input('nombre');
